@@ -42,7 +42,6 @@
             letter-spacing: 1px;
         }
 
-        /* Contenedor interactivo */
         .story-container {
             display: flex;
             flex-direction: column;
@@ -174,13 +173,17 @@
             apodo: "mi amor",
             fecha: "12 de septiembre",
             
-            // PRIMERA ETAPA
+            // PRIMERA FOTO
             foto1: "FB_IMG_1789186189575.jpg", 
             mensaje1: "Hoy se cumple una nueva etapa para nuestra relación, nuestro tiempo juntos ha sido hermoso.",
             
-            // SEGUNDA ETAPA 
-            foto2: "IMG-20260912-WA0000.jpg", 
-            mensaje2: "Para que creemos más recuerdos juntos te quiero dar algo...",
+            // SEGUNDA FOTO
+            foto2: "FB_IMG_1789186801924.jpg", 
+            mensaje2: "Cada momento a tu lado es un recuerdo que atesoro con todo el corazón.", 
+            
+            // TERCERA FOTO
+            foto3: "FB_IMG_1789186821045.jpg", 
+            mensaje3: "Para que creemos más recuerdos juntos te quiero dar algo...",
             
             // EL REGALO FINAL
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
@@ -202,6 +205,7 @@
         const seccionRegalo = document.getElementById('gift-section');
         const photoContainer = document.getElementById('photo-container');
 
+        // Cargar primera etapa
         imgElement.src = config.foto1;
         msgElement.innerText = `"${config.mensaje1}"`;
 
@@ -215,13 +219,22 @@
 
         btnAccion.addEventListener('click', () => {
             if (pasoActual === 1) {
+                // Avanzar a la foto 2
                 triggerAnimation();
                 imgElement.src = config.foto2;
                 msgElement.innerText = `"${config.mensaje2}"`;
-                btnAccion.innerText = "🎁 Toca para abrir tu regalo";
                 pasoActual = 2;
                 
             } else if (pasoActual === 2) {
+                // Avanzar a la foto 3
+                triggerAnimation();
+                imgElement.src = config.foto3;
+                msgElement.innerText = `"${config.mensaje3}"`;
+                btnAccion.innerText = "🎁 Toca para abrir tu regalo";
+                pasoActual = 3;
+
+            } else if (pasoActual === 3) {
+                // Final: Mostrar regalo y lanzar confeti
                 btnAccion.style.display = 'none'; 
                 seccionRegalo.style.display = 'flex'; 
                 seccionRegalo.classList.add('fade-anim');
