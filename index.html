@@ -9,10 +9,10 @@
     
     <style>
         :root {
-            /* Colores extraídos exactamente de tu imagen de referencia */
+            var(--ticket-dark): #ef6195;
             --ticket-dark: #ef6195;
             --ticket-light: #fab5ce;
-            --ticket-bg: #fdf8f5; /* El color de fondo de la página */
+            --ticket-bg: #fdf8f5; 
         }
 
         body {
@@ -104,11 +104,8 @@
 
         .action-btn:hover { background-color: #a93226; transform: scale(1.05); }
 
-        /* =========================================
-           DISEÑO DEL TICKET ESTILO REFERENCIA
-           ========================================= */
         .ticket-wrapper {
-            display: none; /* Oculto hasta el paso 3 */
+            display: none; 
             width: 95%;
             max-width: 550px;
             margin: 0 auto 60px auto;
@@ -123,9 +120,10 @@
             padding: 12px;
             width: 100%;
             box-sizing: border-box;
+            /* Animación flotante agregada aquí */
+            animation: flotar 3s ease-in-out infinite;
         }
 
-        /* Los recortes (muescas) arriba y abajo */
         .notch {
             position: absolute;
             width: 34px;
@@ -133,13 +131,12 @@
             background-color: var(--ticket-bg);
             border-radius: 50%;
             z-index: 10;
-            left: 87px; /* Alineado justo con la línea de puntos */
+            left: 87px; 
             transform: translateX(-50%);
         }
         .notch.top { top: -17px; }
         .notch.bottom { bottom: -17px; }
 
-        /* Sección izquierda (Talón) */
         .stub {
             width: 60px;
             flex-shrink: 0;
@@ -163,7 +160,6 @@
             transform: rotate(180deg);
         }
 
-        /* Línea de puntos separadora */
         .perforation {
             width: 30px;
             flex-shrink: 0;
@@ -180,7 +176,6 @@
             border-radius: 50%;
         }
 
-        /* Cuerpo principal del ticket */
         .main-ticket {
             flex: 1;
             display: flex;
@@ -188,7 +183,6 @@
             justify-content: space-between;
         }
 
-        /* Franjas rosas claras arriba y abajo */
         .light-band {
             background-color: var(--ticket-light);
             height: 28px;
@@ -205,7 +199,6 @@
             border-top: 4px dashed var(--ticket-dark);
         }
 
-        /* Contenido interior (Texto + Foto) */
         .main-content {
             flex: 1;
             display: flex;
@@ -222,7 +215,7 @@
         }
         .content-text h3 {
             margin: 0 0 5px 0;
-            font-size: 2.8rem; /* Letra grande como en la foto */
+            font-size: 2.8rem; 
             letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 900;
@@ -251,7 +244,6 @@
             display: block;
         }
 
-        /* Ajustes para pantallas un poco más grandes */
         @media (min-width: 450px) {
             .content-img { width: 100px; height: 100px; }
             .content-text p { font-size: 1.1rem; }
@@ -264,6 +256,13 @@
         @keyframes fadeInOut {
             0% { opacity: 0; transform: scale(0.98); }
             100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Movimiento flotante */
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
@@ -286,22 +285,17 @@
             <button id="action-btn" class="action-btn">Siguiente ✨</button>
         </div>
 
-        <!-- EL NUEVO TICKET ESTILO REFERENCIA -->
         <div class="ticket-wrapper fade-anim" id="gift-section">
             <div class="ticket">
-                <!-- Muescas circulares -->
                 <div class="notch top"></div>
                 <div class="notch bottom"></div>
 
-                <!-- Lado Izquierdo (Talón) -->
                 <div class="stub">
                     <div class="stub-border">
-                        <!-- El número es su fecha de aniversario: 12-09-26 -->
                         <span class="stub-number">120926</span>
                     </div>
                 </div>
 
-                <!-- Línea punteada divisoria -->
                 <div class="perforation">
                     <div class="dot"></div><div class="dot"></div>
                     <div class="dot"></div><div class="dot"></div>
@@ -309,9 +303,7 @@
                     <div class="dot"></div>
                 </div>
 
-                <!-- Cuerpo Central -->
                 <div class="main-ticket">
-                    <!-- Banda Superior Rosa Claro -->
                     <div class="light-band top">
                         <div class="dashed-line"></div>
                     </div>
@@ -326,7 +318,6 @@
                         </div>
                     </div>
 
-                    <!-- Banda Inferior Rosa Claro -->
                     <div class="light-band bottom">
                         <div class="dashed-line"></div>
                     </div>
@@ -336,17 +327,12 @@
     </main>
 
     <script>
-        // =====================================================================
-        // 🛠️ ZONA DE PERSONALIZACIÓN
-        // =====================================================================
-        
         const config = {
             de: "Blanca",
             para: "Pablo",
             apodo: "mi amor",
             fecha: "12 de septiembre",
             
-            // LAS TRES FOTOS DE LA HISTORIA
             foto1: "FB_IMG_1789186189575.jpg", 
             mensaje1: "Hoy se cumple una nueva etapa para nuestra relación, nuestro tiempo juntos ha sido hermoso.",
             
@@ -356,15 +342,10 @@
             foto3: "FB_IMG_1789186821045.jpg", 
             mensaje3: "Para que creemos más recuerdos juntos te quiero dar algo...",
             
-            // LA FOTO DEL PARQUE Y EL TEXTO DEL REGALO
             fotoRegalo: "1f.jpg", 
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
         };
 
-        // =====================================================================
-        // Lógica de la historia interactiva
-        // =====================================================================
-        
         document.getElementById('header-name').innerText = `✿ de ${config.de} para ${config.para} ✿`;
         document.getElementById('main-title').innerHTML = `Feliz<br>aniversario,<br><em>${config.apodo}</em>`;
         document.getElementById('anniversary-date').innerText = config.fecha;
