@@ -97,34 +97,72 @@
 
         .action-btn:hover { background-color: #a93226; transform: scale(1.05); }
 
-        .gift-section {
-            display: none; 
-            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
-            padding: 40px 30px;
-            border-radius: 20px;
-            margin: 0px 20px 60px 20px;
-            box-shadow: 0 8px 20px rgba(200, 90, 90, 0.15);
-            border: 2px dashed #f5b7b1;
+        /* DISEÑO DEL TICKET DE REGALO */
+        .ticket-wrapper {
+            display: none; /* Oculto hasta el final */
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto 60px auto;
+            filter: drop-shadow(0 10px 20px rgba(200, 90, 90, 0.2));
+        }
+
+        .ticket {
+            display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-
-        .gift-title {
-            font-size: 1.8rem;
-            color: #a93226;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .gift-content {
-            font-family: 'Lato', sans-serif;
-            font-size: 1.3rem;
-            color: #4a2311;
-            line-height: 1.6;
-            background: white;
-            padding: 20px;
+            background: #fff;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 2px solid #f5b7b1;
+        }
+
+        .ticket-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 2px dashed #f5b7b1;
+        }
+
+        .ticket-body {
+            display: flex;
+            background: linear-gradient(135deg, #fffcfd 0%, #fff0f5 100%);
+        }
+
+        .ticket-info {
+            flex: 1;
+            padding: 25px 20px;
+            text-align: left;
+        }
+
+        .ticket-title {
+            font-size: 1.4rem;
+            color: #a93226;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ticket-desc {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem;
+            color: #4a2311;
+            line-height: 1.5;
+        }
+
+        .ticket-stub {
+            background: #ffe4e1;
+            padding: 20px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 2px dashed #c85a5a;
+            font-family: 'Lato', sans-serif;
+            font-weight: bold;
+            color: #a93226;
+            writing-mode: vertical-rl;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transform: rotate(180deg); /* Para que se lea de abajo hacia arriba */
         }
 
         .fade-anim {
@@ -156,10 +194,21 @@
             <button id="action-btn" class="action-btn">Siguiente ✨</button>
         </div>
 
-        <section class="gift-section" id="gift-section">
-            <div class="gift-title">💌 Tu Regalo 💌</div>
-            <div class="gift-content" id="gift-text"></div>
-        </section>
+        <!-- EL TICKET DE REGALO -->
+        <div class="ticket-wrapper fade-anim" id="gift-section">
+            <div class="ticket">
+                <img class="ticket-image" id="ticket-img" src="" alt="Foto del regalo">
+                <div class="ticket-body">
+                    <div class="ticket-info">
+                        <div class="ticket-title">🎟️ PASE V.I.P</div>
+                        <div class="ticket-desc" id="gift-text"></div>
+                    </div>
+                    <div class="ticket-stub">
+                        VÁLIDO PARA 2
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -173,19 +222,18 @@
             apodo: "mi amor",
             fecha: "12 de septiembre",
             
-            // PRIMERA FOTO
+            // LAS TRES FOTOS DE LA HISTORIA
             foto1: "FB_IMG_1789186189575.jpg", 
             mensaje1: "Hoy se cumple una nueva etapa para nuestra relación, nuestro tiempo juntos ha sido hermoso.",
             
-            // SEGUNDA FOTO
             foto2: "FB_IMG_1789186801924.jpg", 
             mensaje2: "Cada momento a tu lado es un recuerdo que atesoro con todo el corazón.", 
             
-            // TERCERA FOTO
             foto3: "FB_IMG_1789186821045.jpg", 
             mensaje3: "Para que creemos más recuerdos juntos te quiero dar algo...",
             
-            // EL REGALO FINAL
+            // EL TICKET DE REGALO FINAL
+            fotoRegalo: "1f.jpg", // <--- Tu nueva imagen del parque
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
         };
 
@@ -197,6 +245,7 @@
         document.getElementById('main-title').innerHTML = `Feliz<br>aniversario,<br><em>${config.apodo}</em>`;
         document.getElementById('anniversary-date').innerText = config.fecha;
         document.getElementById('gift-text').innerText = config.regalo;
+        document.getElementById('ticket-img').src = config.fotoRegalo;
 
         let pasoActual = 1;
         const imgElement = document.getElementById('main-image');
@@ -234,16 +283,15 @@
                 pasoActual = 3;
 
             } else if (pasoActual === 3) {
-                // Final: Mostrar regalo y lanzar confeti
+                // Final: Mostrar el ticket y lanzar confeti
                 btnAccion.style.display = 'none'; 
-                seccionRegalo.style.display = 'flex'; 
-                seccionRegalo.classList.add('fade-anim');
+                seccionRegalo.style.display = 'block'; 
                 
                 confetti({
-                    particleCount: 150,
-                    spread: 80,
+                    particleCount: 200,
+                    spread: 90,
                     origin: { y: 0.6 },
-                    colors: ['#c85a5a', '#a93226', '#ffb6b9', '#fdf8f5'] 
+                    colors: ['#c85a5a', '#a93226', '#ffb6b9', '#fdf8f5', '#ffd700'] 
                 });
             }
         });
