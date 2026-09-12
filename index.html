@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Aniversario</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
         /* ESTILOS VISUALES */
@@ -21,7 +21,7 @@
         }
 
         header {
-            margin-top: 60px;
+            margin-top: 50px;
             padding: 20px;
         }
 
@@ -47,8 +47,16 @@
             font-style: italic;
         }
 
+        .date-text {
+            font-family: 'Lato', sans-serif;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
         figure {
-            margin: 40px 0;
+            margin: 30px 0;
             padding: 15px;
             background: white;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
@@ -69,12 +77,21 @@
             display: block;
         }
 
-        /* SECCIÓN DEL REGALO */
+        /* SECCIÓN DEL MENSAJE Y REGALO */
+        .special-message {
+            font-size: 1.6rem;
+            color: #8e44ad;
+            margin: 10px 20px 30px 20px;
+            font-style: italic;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+
         .gift-section {
             background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
             padding: 40px 30px;
             border-radius: 20px;
-            margin: 20px 20px 60px 20px;
+            margin: 0px 20px 60px 20px;
             box-shadow: 0 8px 20px rgba(200, 90, 90, 0.15);
             max-width: 500px;
             border: 2px dashed #f5b7b1;
@@ -99,14 +116,19 @@
 
     <main>
         <header>
-            <p class="flower-text" id="header-name">✿ para [Nombre] ✿</p>
+            <p class="flower-text" id="header-name">✿ de [De] para [Para] ✿</p>
             <h1 id="main-title">Feliz<br>aniversario,<br><em id="pet-name">mi amor</em></h1>
+            <p class="date-text" id="anniversary-date">[Fecha]</p>
         </header>
 
         <figure>
             <!-- La imagen se reemplazará automáticamente por la configuración de abajo -->
             <img id="main-image" src="https://via.placeholder.com/350x450/f9e7e7/c85a5a?text=Pon+tu+foto+aqui" alt="Nuestra foto">
         </figure>
+
+        <div class="special-message" id="special-message">
+            "[Mensaje]"
+        </div>
 
         <section class="gift-section">
             <div class="gift-title">💌 Tu Regalo 💌</div>
@@ -118,30 +140,35 @@
 
     <script>
         // =====================================================================
-        // 🛠️ ZONA DE PERSONALIZACIÓN
+        // 🛠️ ZONA DE PERSONALIZACIÓN SÚPER FÁCIL
         // =====================================================================
         
         const config = {
-            nombre: "Tamara",                    
-            apodo: "mi amor",                    
-            titulo: "Feliz<br>aniversario,",     
+            de: "Blanca",
+            para: "Pablo",
+            apodo: "mi amor",
+            fecha: "12 de septiembre",
             
-            // Aquí ya está tu imagen configurada:
+            // Tu mensaje romántico:
+            mensaje: "Gracias por siempre ser mi lugar seguro. ❤️",
+            
+            // La foto (asegúrate de que esté subida a GitHub):
             fotoUrl: "IMG-20260912-WAO000.jpg",   
             
-            // 🎁 EL REGALO SOLICITADO
+            // 🎁 Tu regalo:
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
         };
 
         // =====================================================================
-        // Lógica para actualizar la página
+        // Lógica para actualizar la página (No necesitas tocar esto)
         // =====================================================================
         
-        document.getElementById('header-name').innerText = `✿ para ${config.nombre} ✿`;
-        document.getElementById('main-title').innerHTML = `${config.titulo}<br><em>${config.apodo}</em>`;
+        document.getElementById('header-name').innerText = `✿ de ${config.de} para ${config.para} ✿`;
+        document.getElementById('main-title').innerHTML = `Feliz<br>aniversario,<br><em>${config.apodo}</em>`;
+        document.getElementById('anniversary-date').innerText = config.fecha;
+        document.getElementById('special-message').innerText = `"${config.mensaje}"`;
         document.getElementById('gift-text').innerText = config.regalo;
         
-        // Cambia la imagen si se puso un enlace/nombre válido
         if (config.fotoUrl !== "") {
             document.getElementById('main-image').src = config.fotoUrl;
         }
