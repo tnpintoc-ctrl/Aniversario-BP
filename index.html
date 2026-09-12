@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            var(--ticket-dark): #ef6195;
+            --ticket-dark: #ef6195;
+            --ticket-light: #fab5ce;
+            --ticket-bg: #fdf8f5; 
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif;
+            background-color: var(--ticket-bg);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header { margin-top: 50px; padding: 20px; }
+
+        .flower-text {
+            font-family: 'Lato', sans-serif;
+            color: #c85a5a;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h1 { font-size: 3.5rem; line-height: 1.2; color: #2c3e50; margin: 0; font-weight: 700; }
+        h1 em { color: #c85a5a; font-style: italic; }
+
+        .date-text {
+            font-family: 'Lato', sans-serif;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .story-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        figure {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        figure:hover { transform: rotate(0deg); }
+
+        figure img {
+            max-width: 85vw;
+            width: 350px;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .special-message {
+            font-size: 1.6rem;
+            color: #8e44ad;
+            margin: 10px 20px 30px 20px;
+            font-style: italic;
+            line-height: 1.4;
+            min-height: 80px; 
+        }
+
+        .action-btn {
+            background-color: #c85a5a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 10px rgba(200, 90, 90, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .action-btn:hover { background-color: #a93226; transform: scale(1.05); }
+
+        .ticket-wrapper {
+            display: none; 
+            width: 95%;
+            max-width: 550px;
+            margin: 0 auto 60px auto;
+            filter: drop-shadow(0 15px 25px rgba(239, 97, 149, 0.3));
+        }
+
+        .ticket {
+            display: flex;
+            background-color: var(--ticket-dark);
+            border-radius: 12px;
+            position: relative;
+            padding: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            /* Animación flotante agregada aquí */
+            animation: flotar 3s ease-in-out infinite;
+        }
+
+        .notch {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            background-color: var(--ticket-bg);
+            border-radius: 50%;
+            z-index: 10;
+            left: 87px; 
+            transform: translateX(-50%);
+        }
+        .notch.top { top: -17px; }
+        .notch.bottom { bottom: -17px; }
+
+        .stub {
+            width: 60px;
+            flex-shrink: 0;
+        }
+        .stub-border {
+            border: 3px solid var(--ticket-light);
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .stub-number {
+            color: var(--ticket-light);
+            font-size: 1.6rem;
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
+            letter-spacing: 6px;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        .perforation {
+            width: 30px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 15px 0;
+        }
+        .dot {
+            width: 7px;
+            height: 7px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .main-ticket {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .light-band {
+            background-color: var(--ticket-light);
+            height: 28px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .light-band.top { border-radius: 6px 6px 0 0; }
+        .light-band.bottom { border-radius: 0 0 6px 6px; }
+
+        .dashed-line {
+            width: 90%;
+            border-top: 4px dashed var(--ticket-dark);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .content-text {
+            flex: 1;
+            text-align: left;
+            color: white;
+            font-family: 'Lato', sans-serif;
+        }
+        .content-text h3 {
+            margin: 0 0 5px 0;
+            font-size: 2.8rem; 
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .content-text p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.3;
+            font-weight: 400;
+        }
+
+        .content-img {
+            width: 75px;
+            height: 75px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 3px solid white;
+            flex-shrink: 0;
+            background-color: white;
+        }
+        .content-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (min-width: 450px) {
+            .content-img { width: 100px; height: 100px; }
+            .content-text p { font-size: 1.1rem; }
+        }
+
+        .fade-anim {
+            animation: fadeInOut 0.6s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Movimiento flotante */
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <header>
+            <p class="flower-text" id="header-name"></p>
+            <h1 id="main-title">Feliz<br>aniversario,<br><em id="pet-name"></em></h1>
+            <p class="date-text" id="anniversary-date"></p>
+        </header>
+
+        <div class="story-container">
+            <figure id="photo-container">
+                <img id="main-image" src="" alt="Nuestra foto">
+            </figure>
+
+            <div class="special-message" id="special-message"></div>
+
+            <button id="action-btn" class="action-btn">Siguiente ✨</button>
+        </div>
+
+        <div class="ticket-wrapper fade-anim" id="gift-section">
+            <div class="ticket">
+                <div class="notch top"></div>
+                <div class="notch bottom"></div>
+
+                <div class="stub">
+                    <div class="stub-border">
+                        <span class="stub-number">120926</span>
+                    </div>
+                </div>
+
+                <div class="perforation">
+                    <div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+
+                <div class="main-ticket">
+                    <div class="light-band top">
+                        <div class="dashed-line"></div>
+                    </div>
+                    
+                    <div class="main-content">
+                        <div class="content-text">
+                            <h3>TICKET</h3>
+                            <p id="gift-text"></p>
+                        </div>
+                        <div class="content-img">
+                            <img id="ticket-img" src="" alt="Parque Tricao">
+                        </div>
+                    </div>
+
+                    <div class="light-band bottom">
+                        <div class="dashed-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const config = {
+            de: "Blanca",
+            para: "Pablo",
+            apodo: "mi amor",
+            fecha: "12 de septiembre",
+            
+            foto1: "FB_IMG_1789186189575.jpg", 
+            mensaje1: "Hoy se cumple una nueva etapa para nuestra relación, nuestro tiempo juntos ha sido hermoso.",
+            
+            foto2: "FB_IMG_1789186801924.jpg", 
+            mensaje2: "Cada momento a tu lado es un recuerdo que atesoro con todo el corazón.", 
+            
+            foto3: "FB_IMG_1789186821045.jpg", 
+            mensaje3: "Para que creemos más recuerdos juntos te quiero dar algo...",
+            
+            fotoRegalo: "1f.jpg", 
+            regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
+        };
+
+        document.getElementById('header-name').innerText = `✿ de ${config.de} para ${config.para} ✿`;
+        document.getElementById('main-title').innerHTML = `Feliz<br>aniversario,<br><em>${config.apodo}</em>`;
+        document.getElementById('anniversary-date').innerText = config.fecha;
+        document.getElementById('gift-text').innerText = config.regalo;
+        document.getElementById('ticket-img').src = config.fotoRegalo;
+
+        let pasoActual = 1;
+        const imgElement = document.getElementById('main-image');
+        const msgElement = document.getElementById('special-message');
+        const btnAccion = document.getElementById('action-btn');
+        const seccionRegalo = document.getElementById('gift-section');
+        const photoContainer = document.getElementById('photo-container');
+
+        imgElement.src = config.foto1;
+        msgElement.innerText = `"${config.mensaje1}"`;
+
+        function triggerAnimation() {
+            photoContainer.classList.remove('fade-anim');
+            msgElement.classList.remove('fade-anim');
+            void photoContainer.offsetWidth; 
+            photoContainer.classList.add('fade-anim');
+            msgElement.classList.add('fade-anim');
+        }
+
+        btnAccion.addEventListener('click', () => {
+            if (pasoActual === 1) {
+                triggerAnimation();
+                imgElement.src = config.foto2;
+                msgElement.innerText = `"${config.mensaje2}"`;
+                pasoActual = 2;
+                
+            } else if (pasoActual === 2) {
+                triggerAnimation();
+                imgElement.src = config.foto3;
+                msgElement.innerText = `"${config.mensaje3}"`;
+                btnAccion.innerText = "🎁 Toca para abrir tu regalo";
+                pasoActual = 3;
+
+            } else if (pasoActual === 3) {
+                btnAccion.style.display = 'none'; 
+                seccionRegalo.style.display = 'block'; 
+                
+                confetti({
+                    particleCount: 200,
+                    spread: 90,
+                    origin: { y: 0.6 },
+                    colors: ['#ef6195', '#fab5ce', '#ffffff', '#c85a5a'] 
+                });
+            }
+        });
+    </script>
+</body>
+</html>
