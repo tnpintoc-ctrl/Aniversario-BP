@@ -80,6 +80,11 @@
             display: block;
         }
 
+        /* Efecto de transición suave para las imágenes y textos */
+        #main-image, #special-message {
+            transition: opacity 0.5s ease-in-out;
+        }
+
         .special-message {
             font-size: 1.6rem;
             color: #8e44ad;
@@ -98,7 +103,7 @@
             box-shadow: 0 8px 20px rgba(200, 90, 90, 0.15);
             max-width: 500px;
             border: 2px dashed #f5b7b1;
-            display: flex;
+            display: none; /* Oculto al principio */
             flex-direction: column;
             align-items: center;
         }
@@ -110,8 +115,8 @@
             font-weight: bold;
         }
 
-        /* Estilos del botón sorpresa */
-        .reveal-btn {
+        /* Estilos generales para botones */
+        .btn {
             background-color: #c85a5a;
             color: white;
             border: none;
@@ -123,9 +128,10 @@
             box-shadow: 0 4px 10px rgba(200, 90, 90, 0.3);
             transition: transform 0.2s, background-color 0.2s;
             font-weight: bold;
+            margin-bottom: 30px;
         }
 
-        .reveal-btn:hover {
+        .btn:hover {
             background-color: #a93226;
             transform: scale(1.05);
         }
@@ -143,7 +149,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* Animación para cuando aparece el texto */
+        /* Animación para cuando aparece el regalo */
         .fade-in {
             display: block;
             animation: fadeIn 0.8s ease-out forwards;
@@ -165,22 +171,25 @@
         </header>
 
         <figure>
-            <img id="main-image" src="https://via.placeholder.com/350x450/f9e7e7/c85a5a?text=Pon+tu+foto+aqui" alt="Nuestra foto">
+            <img id="main-image" src="" alt="Nuestra foto">
         </figure>
 
         <div class="special-message" id="special-message">
-            "[Mensaje]"
+            <!-- El mensaje se carga por código -->
         </div>
 
-        <section class="gift-section">
+        <!-- Botón para pasar a la siguiente etapa -->
+        <button id="next-btn" class="btn">Siguiente 🤍</button>
+
+        <section class="gift-section" id="gift-section">
             <div class="gift-title">💌 Tu Regalo 💌</div>
             
             <!-- Botón nuevo para revelar -->
-            <button id="reveal-btn" class="reveal-btn">🎁 Toca para abrir tu regalo</button>
+            <button id="reveal-btn" class="btn">🎁 Toca para abrir tu regalo</button>
             
             <!-- Contenedor del texto (oculto inicialmente) -->
             <div class="gift-content" id="gift-text">
-                [Aquí va el regalo]
+                <!-- El regalo se carga por código -->
             </div>
         </section>
     </main>
@@ -195,39 +204,70 @@
             para: "Pablo",
             apodo: "mi amor",
             fecha: "12 de septiembre",
-            mensaje: "Gracias por siempre ser mi lugar seguro. ❤️",
-            fotoUrl: "IMG-20260912-WAO000.jpg",   
+            
+            // --- ETAPA 1 ---
+            foto1: "FB_IMG_1789186189575.jpg",   
+            mensaje1: "Hoy se cumple una nueva etapa para nuestra relación, nuestro tiempo juntos ha sido hermoso.",
+            
+            // --- ETAPA 2 ---
+            // 👇 REEMPLAZA ESTO por el nombre exacto de tu segunda imagen 👇
+            foto2: "NOMBRE_DE_TU_SEGUNDA_FOTO.jpg", 
+            mensaje2: "Para que creemos más recuerdos juntos te quiero dar algo...",
+            
+            // --- EL REGALO ---
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
         };
 
         // =====================================================================
-        // Lógica de carga
+        // Lógica de carga interactiva
         // =====================================================================
         
+        // Cargar textos fijos del encabezado
         document.getElementById('header-name').innerText = `✿ de ${config.de} para ${config.para} ✿`;
         document.getElementById('main-title').innerHTML = `Feliz<br>aniversario,<br><em>${config.apodo}</em>`;
         document.getElementById('anniversary-date').innerText = config.fecha;
-        document.getElementById('special-message').innerText = `"${config.mensaje}"`;
-        document.getElementById('gift-text').innerText = config.regalo;
         
-        if (config.fotoUrl !== "") {
-            document.getElementById('main-image').src = config.fotoUrl;
-        }
-
-        // =====================================================================
-        // Lógica del botón sorpresa y confeti
-        // =====================================================================
+        // Elementos dinámicos
+        const imgElement = document.getElementById('main-image');
+        const msgElement = document.getElementById('special-message');
+        const nextBtn = document.getElementById('next-btn');
+        
+        const giftSection = document.getElementById('gift-section');
         const btnRevelar = document.getElementById('reveal-btn');
         const textoRegalo = document.getElementById('gift-text');
 
+        // 1. Mostrar la Etapa 1 al cargar la página
+        imgElement.src = config.foto1;
+        msgElement.innerText = `"${config.mensaje1}"`;
+
+        // 2. Transición a la Etapa 2 cuando se presiona "Siguiente"
+        nextBtn.addEventListener('click', () => {
+            // Desvanecer contenido actual
+            imgElement.style.opacity = 0;
+            msgElement.style.opacity = 0;
+            
+            setTimeout(() => {
+                // Cambiar imagen y texto mientras están invisibles
+                imgElement.src = config.foto2;
+                msgElement.innerText = `"${config.mensaje2}"`;
+                
+                // Volver a hacerlos visibles
+                imgElement.style.opacity = 1;
+                msgElement.style.opacity = 1;
+                
+                // Ocultar el botón "Siguiente" y mostrar la caja del regalo
+                nextBtn.style.display = 'none';
+                giftSection.style.display = 'flex';
+            }, 500); // Espera medio segundo para hacer el cambio
+        });
+
+        // 3. Lógica del botón sorpresa y confeti
         btnRevelar.addEventListener('click', () => {
-            // 1. Ocultamos el botón
             btnRevelar.style.display = 'none';
             
-            // 2. Mostramos el texto del regalo con animación
+            textoRegalo.innerText = config.regalo;
             textoRegalo.classList.add('fade-in');
             
-            // 3. Lanzamos el confeti
             confetti({
                 particleCount: 150,
                 spread: 80,
