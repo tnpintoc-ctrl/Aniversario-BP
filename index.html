@@ -17,7 +17,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Playfair Display', serif;
-            background-color: #fff0f5; /* Un rosa muy suave y romántico */
+            background-color: #fff0f5; 
             color: #333;
             display: flex;
             flex-direction: column;
@@ -27,7 +27,6 @@
             overflow-x: hidden;
         }
 
-        /* EFECTO DE CORAZONES FLOTANTES */
         .floating-heart {
             position: fixed;
             bottom: -30px;
@@ -35,7 +34,7 @@
             z-index: -1;
             opacity: 0.5;
             animation: floatUp 6s linear forwards;
-            pointer-events: none; /* Para que no interfieran al hacer clic */
+            pointer-events: none; 
         }
 
         @keyframes floatUp {
@@ -73,26 +72,51 @@
             width: 100%;
         }
 
+        /* =========================================
+           ESTILO POLAROID Y WASHI TAPE
+           ========================================= */
         figure {
-            margin: 20px 0;
-            padding: 15px;
-            background: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            border-radius: 12px;
-            transform: rotate(-2deg);
-            transition: transform 0.3s ease;
+            margin: 40px 0 20px 0; /* Más espacio arriba para la cinta */
+            padding: 15px 15px 65px 15px; /* Borde inferior grueso estilo Polaroid */
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 2px; /* Bordes ligeramente rectos */
+            transform: rotate(-3deg);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; /* Necesario para el washi tape */
         }
 
-        figure:hover { transform: rotate(0deg); }
+        figure:hover { 
+            transform: rotate(2deg) scale(1.02); 
+        }
+
+        /* El Washi Tape */
+        figure::before {
+            content: '';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-4deg);
+            width: 130px;
+            height: 35px;
+            background-color: rgba(239, 97, 149, 0.5); /* Rosa translúcido */
+            border-left: 3px dotted rgba(255, 255, 255, 0.6); /* Efecto rasgado */
+            border-right: 3px dotted rgba(255, 255, 255, 0.6);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
 
         figure img {
             max-width: 85vw;
-            width: 350px;
+            width: 320px;
             height: auto;
-            border-radius: 8px;
+            border-radius: 2px;
             display: block;
             object-fit: cover;
+            border: 1px solid #f0f0f0; /* Línea muy sutil alrededor de la foto */
         }
+
+        /* ========================================= */
 
         .special-message {
             font-size: 1.6rem;
@@ -332,9 +356,6 @@
     </main>
 
     <script>
-        // ==========================================
-        // CREADOR DE CORAZONES DE FONDO
-        // ==========================================
         function crearCorazon() {
             const corazon = document.createElement('div');
             const emojis = ['🤍', '💖', '🌸', '✨'];
@@ -349,11 +370,8 @@
                 corazon.remove();
             }, 6000);
         }
-        setInterval(crearCorazon, 700); // Aparece uno nuevo cada casi 1 segundo
+        setInterval(crearCorazon, 700); 
 
-        // ==========================================
-        // CONFIGURACIÓN DE TU REGALO
-        // ==========================================
         const config = {
             de: "Blanca",
             para: "Pablo",
