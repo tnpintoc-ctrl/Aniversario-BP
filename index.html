@@ -6,6 +6,9 @@
     <title>Feliz Aniversario</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
+    <!-- Librería externa para el efecto de confeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
     <style>
         /* ESTILOS VISUALES */
         body {
@@ -77,7 +80,6 @@
             display: block;
         }
 
-        /* SECCIÓN DEL MENSAJE Y REGALO */
         .special-message {
             font-size: 1.6rem;
             color: #8e44ad;
@@ -87,6 +89,7 @@
             line-height: 1.4;
         }
 
+        /* SECCIÓN DEL REGALO MODIFICADA */
         .gift-section {
             background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
             padding: 40px 30px;
@@ -95,20 +98,60 @@
             box-shadow: 0 8px 20px rgba(200, 90, 90, 0.15);
             max-width: 500px;
             border: 2px dashed #f5b7b1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .gift-title {
             font-size: 1.8rem;
             color: #a93226;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-weight: bold;
         }
 
-        .gift-content {
-            font-family: 'Lato', sans-serif;
+        /* Estilos del botón sorpresa */
+        .reveal-btn {
+            background-color: #c85a5a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
             font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 10px rgba(200, 90, 90, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;
+        }
+
+        .reveal-btn:hover {
+            background-color: #a93226;
+            transform: scale(1.05);
+        }
+
+        /* El texto del regalo está oculto al principio */
+        .gift-content {
+            display: none; 
+            font-family: 'Lato', sans-serif;
+            font-size: 1.3rem;
             color: #4a2311;
             line-height: 1.6;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Animación para cuando aparece el texto */
+        .fade-in {
+            display: block;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -122,7 +165,6 @@
         </header>
 
         <figure>
-            <!-- La imagen se reemplazará automáticamente por la configuración de abajo -->
             <img id="main-image" src="https://via.placeholder.com/350x450/f9e7e7/c85a5a?text=Pon+tu+foto+aqui" alt="Nuestra foto">
         </figure>
 
@@ -132,6 +174,11 @@
 
         <section class="gift-section">
             <div class="gift-title">💌 Tu Regalo 💌</div>
+            
+            <!-- Botón nuevo para revelar -->
+            <button id="reveal-btn" class="reveal-btn">🎁 Toca para abrir tu regalo</button>
+            
+            <!-- Contenedor del texto (oculto inicialmente) -->
             <div class="gift-content" id="gift-text">
                 [Aquí va el regalo]
             </div>
@@ -140,7 +187,7 @@
 
     <script>
         // =====================================================================
-        // 🛠️ ZONA DE PERSONALIZACIÓN SÚPER FÁCIL
+        // 🛠️ ZONA DE PERSONALIZACIÓN
         // =====================================================================
         
         const config = {
@@ -148,19 +195,13 @@
             para: "Pablo",
             apodo: "mi amor",
             fecha: "12 de septiembre",
-            
-            // Tu mensaje romántico:
             mensaje: "Gracias por siempre ser mi lugar seguro. ❤️",
-            
-            // La foto (asegúrate de que esté subida a GitHub):
             fotoUrl: "IMG-20260912-WAO000.jpg",   
-            
-            // 🎁 Tu regalo:
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
         };
 
         // =====================================================================
-        // Lógica para actualizar la página (No necesitas tocar esto)
+        // Lógica de carga
         // =====================================================================
         
         document.getElementById('header-name').innerText = `✿ de ${config.de} para ${config.para} ✿`;
@@ -172,6 +213,28 @@
         if (config.fotoUrl !== "") {
             document.getElementById('main-image').src = config.fotoUrl;
         }
+
+        // =====================================================================
+        // Lógica del botón sorpresa y confeti
+        // =====================================================================
+        const btnRevelar = document.getElementById('reveal-btn');
+        const textoRegalo = document.getElementById('gift-text');
+
+        btnRevelar.addEventListener('click', () => {
+            // 1. Ocultamos el botón
+            btnRevelar.style.display = 'none';
+            
+            // 2. Mostramos el texto del regalo con animación
+            textoRegalo.classList.add('fade-in');
+            
+            // 3. Lanzamos el confeti
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#c85a5a', '#a93226', '#ffb6b9', '#fdf8f5'] 
+            });
+        });
     </script>
 </body>
 </html>
