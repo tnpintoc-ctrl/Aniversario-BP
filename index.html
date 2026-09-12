@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Aniversario</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    
-    <!-- Librería externa para el efecto de confeti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     
     <style>
-        /* ESTILOS VISUALES */
         body {
             margin: 0;
             padding: 0;
@@ -23,10 +20,7 @@
             text-align: center;
         }
 
-        header {
-            margin-top: 50px;
-            padding: 20px;
-        }
+        header { margin-top: 50px; padding: 20px; }
 
         .flower-text {
             font-family: 'Lato', sans-serif;
@@ -37,18 +31,8 @@
             margin-bottom: 15px;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            line-height: 1.2;
-            color: #2c3e50;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        h1 em {
-            color: #c85a5a;
-            font-style: italic;
-        }
+        h1 { font-size: 3.5rem; line-height: 1.2; color: #2c3e50; margin: 0; font-weight: 700; }
+        h1 em { color: #c85a5a; font-style: italic; }
 
         .date-text {
             font-family: 'Lato', sans-serif;
@@ -58,8 +42,17 @@
             letter-spacing: 1px;
         }
 
+        /* Contenedor interactivo */
+        .story-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
         figure {
-            margin: 30px 0;
+            margin: 20px 0;
             padding: 15px;
             background: white;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
@@ -68,9 +61,7 @@
             transition: transform 0.3s ease;
         }
 
-        figure:hover {
-            transform: rotate(0deg);
-        }
+        figure:hover { transform: rotate(0deg); }
 
         figure img {
             max-width: 85vw;
@@ -78,11 +69,7 @@
             height: auto;
             border-radius: 8px;
             display: block;
-        }
-
-        /* Efecto de transición suave para las imágenes y textos */
-        #main-image, #special-message {
-            transition: opacity 0.5s ease-in-out;
+            object-fit: cover;
         }
 
         .special-message {
@@ -90,33 +77,11 @@
             color: #8e44ad;
             margin: 10px 20px 30px 20px;
             font-style: italic;
-            max-width: 600px;
             line-height: 1.4;
+            min-height: 80px; 
         }
 
-        /* SECCIÓN DEL REGALO MODIFICADA */
-        .gift-section {
-            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
-            padding: 40px 30px;
-            border-radius: 20px;
-            margin: 0px 20px 60px 20px;
-            box-shadow: 0 8px 20px rgba(200, 90, 90, 0.15);
-            max-width: 500px;
-            border: 2px dashed #f5b7b1;
-            display: none; /* Oculto al principio */
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .gift-title {
-            font-size: 1.8rem;
-            color: #a93226;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        /* Estilos generales para botones */
-        .btn {
+        .action-btn {
             background-color: #c85a5a;
             color: white;
             border: none;
@@ -128,17 +93,31 @@
             box-shadow: 0 4px 10px rgba(200, 90, 90, 0.3);
             transition: transform 0.2s, background-color 0.2s;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
-        .btn:hover {
-            background-color: #a93226;
-            transform: scale(1.05);
-        }
+        .action-btn:hover { background-color: #a93226; transform: scale(1.05); }
 
-        /* El texto del regalo está oculto al principio */
-        .gift-content {
+        .gift-section {
             display: none; 
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+            padding: 40px 30px;
+            border-radius: 20px;
+            margin: 0px 20px 60px 20px;
+            box-shadow: 0 8px 20px rgba(200, 90, 90, 0.15);
+            border: 2px dashed #f5b7b1;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gift-title {
+            font-size: 1.8rem;
+            color: #a93226;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .gift-content {
             font-family: 'Lato', sans-serif;
             font-size: 1.3rem;
             color: #4a2311;
@@ -149,15 +128,13 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* Animación para cuando aparece el regalo */
-        .fade-in {
-            display: block;
-            animation: fadeIn 0.8s ease-out forwards;
+        .fade-anim {
+            animation: fadeInOut 0.6s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -165,32 +142,24 @@
 
     <main>
         <header>
-            <p class="flower-text" id="header-name">✿ de [De] para [Para] ✿</p>
-            <h1 id="main-title">Feliz<br>aniversario,<br><em id="pet-name">mi amor</em></h1>
-            <p class="date-text" id="anniversary-date">[Fecha]</p>
+            <p class="flower-text" id="header-name"></p>
+            <h1 id="main-title">Feliz<br>aniversario,<br><em id="pet-name"></em></h1>
+            <p class="date-text" id="anniversary-date"></p>
         </header>
 
-        <figure>
-            <img id="main-image" src="" alt="Nuestra foto">
-        </figure>
+        <div class="story-container">
+            <figure id="photo-container">
+                <img id="main-image" src="" alt="Nuestra foto">
+            </figure>
 
-        <div class="special-message" id="special-message">
-            <!-- El mensaje se carga por código -->
+            <div class="special-message" id="special-message"></div>
+
+            <button id="action-btn" class="action-btn">Siguiente ✨</button>
         </div>
-
-        <!-- Botón para pasar a la siguiente etapa -->
-        <button id="next-btn" class="btn">Siguiente 🤍</button>
 
         <section class="gift-section" id="gift-section">
             <div class="gift-title">💌 Tu Regalo 💌</div>
-            
-            <!-- Botón nuevo para revelar -->
-            <button id="reveal-btn" class="btn">🎁 Toca para abrir tu regalo</button>
-            
-            <!-- Contenedor del texto (oculto inicialmente) -->
-            <div class="gift-content" id="gift-text">
-                <!-- El regalo se carga por código -->
-            </div>
+            <div class="gift-content" id="gift-text"></div>
         </section>
     </main>
 
@@ -205,75 +174,65 @@
             apodo: "mi amor",
             fecha: "12 de septiembre",
             
-            // --- ETAPA 1 ---
-            foto1: "FB_IMG_1789186189575.jpg",   
+            // PRIMERA ETAPA
+            foto1: "FB_IMG_1789186189575.jpg", 
             mensaje1: "Hoy se cumple una nueva etapa para nuestra relación, nuestro tiempo juntos ha sido hermoso.",
             
-            // --- ETAPA 2 ---
-            // 👇 REEMPLAZA ESTO por el nombre exacto de tu segunda imagen 👇
-            foto2: "NOMBRE_DE_TU_SEGUNDA_FOTO.jpg", 
+            // SEGUNDA ETAPA 
+            foto2: "IMG-20260912-WA0000.jpg", 
             mensaje2: "Para que creemos más recuerdos juntos te quiero dar algo...",
             
-            // --- EL REGALO ---
+            // EL REGALO FINAL
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
         };
 
         // =====================================================================
-        // Lógica de carga interactiva
+        // Lógica de la historia interactiva
         // =====================================================================
         
-        // Cargar textos fijos del encabezado
         document.getElementById('header-name').innerText = `✿ de ${config.de} para ${config.para} ✿`;
         document.getElementById('main-title').innerHTML = `Feliz<br>aniversario,<br><em>${config.apodo}</em>`;
         document.getElementById('anniversary-date').innerText = config.fecha;
-        
-        // Elementos dinámicos
+        document.getElementById('gift-text').innerText = config.regalo;
+
+        let pasoActual = 1;
         const imgElement = document.getElementById('main-image');
         const msgElement = document.getElementById('special-message');
-        const nextBtn = document.getElementById('next-btn');
-        
-        const giftSection = document.getElementById('gift-section');
-        const btnRevelar = document.getElementById('reveal-btn');
-        const textoRegalo = document.getElementById('gift-text');
+        const btnAccion = document.getElementById('action-btn');
+        const seccionRegalo = document.getElementById('gift-section');
+        const photoContainer = document.getElementById('photo-container');
 
-        // 1. Mostrar la Etapa 1 al cargar la página
         imgElement.src = config.foto1;
         msgElement.innerText = `"${config.mensaje1}"`;
 
-        // 2. Transición a la Etapa 2 cuando se presiona "Siguiente"
-        nextBtn.addEventListener('click', () => {
-            // Desvanecer contenido actual
-            imgElement.style.opacity = 0;
-            msgElement.style.opacity = 0;
-            
-            setTimeout(() => {
-                // Cambiar imagen y texto mientras están invisibles
+        function triggerAnimation() {
+            photoContainer.classList.remove('fade-anim');
+            msgElement.classList.remove('fade-anim');
+            void photoContainer.offsetWidth; 
+            photoContainer.classList.add('fade-anim');
+            msgElement.classList.add('fade-anim');
+        }
+
+        btnAccion.addEventListener('click', () => {
+            if (pasoActual === 1) {
+                triggerAnimation();
                 imgElement.src = config.foto2;
                 msgElement.innerText = `"${config.mensaje2}"`;
+                btnAccion.innerText = "🎁 Toca para abrir tu regalo";
+                pasoActual = 2;
                 
-                // Volver a hacerlos visibles
-                imgElement.style.opacity = 1;
-                msgElement.style.opacity = 1;
+            } else if (pasoActual === 2) {
+                btnAccion.style.display = 'none'; 
+                seccionRegalo.style.display = 'flex'; 
+                seccionRegalo.classList.add('fade-anim');
                 
-                // Ocultar el botón "Siguiente" y mostrar la caja del regalo
-                nextBtn.style.display = 'none';
-                giftSection.style.display = 'flex';
-            }, 500); // Espera medio segundo para hacer el cambio
-        });
-
-        // 3. Lógica del botón sorpresa y confeti
-        btnRevelar.addEventListener('click', () => {
-            btnRevelar.style.display = 'none';
-            
-            textoRegalo.innerText = config.regalo;
-            textoRegalo.classList.add('fade-in');
-            
-            confetti({
-                particleCount: 150,
-                spread: 80,
-                origin: { y: 0.6 },
-                colors: ['#c85a5a', '#a93226', '#ffb6b9', '#fdf8f5'] 
-            });
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#c85a5a', '#a93226', '#ffb6b9', '#fdf8f5'] 
+                });
+            }
         });
     </script>
 </body>
