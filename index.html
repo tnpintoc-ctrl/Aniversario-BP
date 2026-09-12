@@ -13,30 +13,34 @@
             --ticket-light: #fab5ce;
         }
 
-        /* =========================================
-           NUEVO FONDO ANIMADO ROMÁNTICO
-           ========================================= */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Playfair Display', serif;
+            background-color: #fff0f5; /* Un rosa muy suave y romántico */
             color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             min-height: 100vh;
-            
-            /* El degradado y su animación */
-            background: linear-gradient(-45deg, #ffe5e5, #fdf8f5, #fad0c4, #f8cdda);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* EFECTO DE CORAZONES FLOTANTES */
+        .floating-heart {
+            position: fixed;
+            bottom: -30px;
+            font-size: 20px;
+            z-index: -1;
+            opacity: 0.5;
+            animation: floatUp 6s linear forwards;
+            pointer-events: none; /* Para que no interfieran al hacer clic */
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
         }
 
         header { margin-top: 50px; padding: 20px; }
@@ -134,7 +138,6 @@
             box-sizing: border-box;
             animation: flotar 3s ease-in-out infinite;
 
-            /* MÁSCARA TRANSPARENTE: Crea los hoyos reales para ver el fondo animado */
             -webkit-mask: 
                 radial-gradient(circle at 87px 0px, transparent 17px, black 18px) top left / 100% 51% no-repeat,
                 radial-gradient(circle at 87px 100%, transparent 17px, black 18px) bottom left / 100% 51% no-repeat;
@@ -292,8 +295,6 @@
 
         <div class="ticket-wrapper fade-anim" id="gift-section">
             <div class="ticket">
-                <!-- Se eliminaron los divs "notch" porque ahora el hoyo es verdaderamente transparente -->
-                
                 <div class="stub">
                     <div class="stub-border">
                         <span class="stub-number">120926</span>
@@ -331,6 +332,28 @@
     </main>
 
     <script>
+        // ==========================================
+        // CREADOR DE CORAZONES DE FONDO
+        // ==========================================
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            const emojis = ['🤍', '💖', '🌸', '✨'];
+            corazon.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            corazon.classList.add('floating-heart');
+            corazon.style.left = Math.random() * 100 + 'vw';
+            corazon.style.animationDuration = Math.random() * 3 + 4 + 's';
+            corazon.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(corazon);
+            
+            setTimeout(() => {
+                corazon.remove();
+            }, 6000);
+        }
+        setInterval(crearCorazon, 700); // Aparece uno nuevo cada casi 1 segundo
+
+        // ==========================================
+        // CONFIGURACIÓN DE TU REGALO
+        // ==========================================
         const config = {
             de: "Blanca",
             para: "Pablo",
