@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ESTILOS VISUALES */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif;
+            background-color: #fdf8f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header {
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        .flower-text {
+            font-family: 'Lato', sans-serif;
+            color: #c85a5a;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            color: #2c3e50;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        h1 em {
+            color: #c85a5a;
+            font-style: italic;
+        }
+
+        figure {
+            margin: 40px 0;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        figure:hover {
+            transform: rotate(0deg);
+        }
+
+        figure img {
+            max-width: 85vw;
+            width: 350px;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* SECCIÓN DEL REGALO */
+        .gift-section {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+            padding: 40px 30px;
+            border-radius: 20px;
+            margin: 20px 20px 60px 20px;
+            box-shadow: 0 8px 20px rgba(200, 90, 90, 0.15);
+            max-width: 500px;
+            border: 2px dashed #f5b7b1;
+        }
+
+        .gift-title {
+            font-size: 1.8rem;
+            color: #a93226;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .gift-content {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem;
+            color: #4a2311;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <header>
+            <p class="flower-text" id="header-name">✿ para [Nombre] ✿</p>
+            <h1 id="main-title">Feliz<br>aniversario,<br><em id="pet-name">mi amor</em></h1>
+        </header>
+
+        <figure>
+            <!-- La imagen se reemplazará automáticamente si configuras una URL abajo -->
+            <img id="main-image" src="https://via.placeholder.com/350x450/f9e7e7/c85a5a?text=Pon+tu+foto+aqui" alt="Nuestra foto">
+        </figure>
+
+        <section class="gift-section">
+            <div class="gift-title">💌 Tu Regalo 💌</div>
+            <div class="gift-content" id="gift-text">
+                [Aquí va el regalo]
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // =====================================================================
+        // 🛠️ ZONA DE PERSONALIZACIÓN
+        // Solo necesitas modificar los valores que están entre comillas aquí:
+        // =====================================================================
+        
+        const config = {
+            nombre: "Tamara",                    // El nombre que va arriba
+            apodo: "mi amor",                    // La palabra en cursiva del título
+            titulo: "Feliz<br>aniversario,",     // El título principal (usa <br> para saltos de línea)
+            
+            // Reemplaza esto con el enlace o el nombre del archivo de la foto que quieras usar. 
+            // Ejemplo: "nuestra-foto.jpg" (si está en la misma carpeta)
+            fotoUrl: "",   
+            
+            // 🎁 EL REGALO SOLICITADO
+            regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
+        };
+
+        // =====================================================================
+        // (No necesitas tocar el código de aquí hacia abajo)
+        // =====================================================================
+        
+        document.getElementById('header-name').innerText = `✿ para ${config.nombre} ✿`;
+        document.getElementById('main-title').innerHTML = `${config.titulo}<br><em>${config.apodo}</em>`;
+        document.getElementById('gift-text').innerText = config.regalo;
+        
+        // Cambia la imagen solo si pusiste un enlace válido
+        if (config.fotoUrl !== "") {
+            document.getElementById('main-image').src = config.fotoUrl;
+        }
+    </script>
+</body>
+</html>
