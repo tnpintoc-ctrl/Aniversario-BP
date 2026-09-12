@@ -104,7 +104,7 @@
         </header>
 
         <figure>
-            <!-- La imagen se reemplazará automáticamente si configuras una URL abajo -->
+            <!-- La imagen se reemplazará automáticamente por la configuración de abajo -->
             <img id="main-image" src="https://via.placeholder.com/350x450/f9e7e7/c85a5a?text=Pon+tu+foto+aqui" alt="Nuestra foto">
         </figure>
 
@@ -119,31 +119,29 @@
     <script>
         // =====================================================================
         // 🛠️ ZONA DE PERSONALIZACIÓN
-        // Solo necesitas modificar los valores que están entre comillas aquí:
         // =====================================================================
         
         const config = {
-            nombre: "Tamara",                    // El nombre que va arriba
-            apodo: "mi amor",                    // La palabra en cursiva del título
-            titulo: "Feliz<br>aniversario,",     // El título principal (usa <br> para saltos de línea)
+            nombre: "Tamara",                    
+            apodo: "mi amor",                    
+            titulo: "Feliz<br>aniversario,",     
             
-            // Reemplaza esto con el enlace o el nombre del archivo de la foto que quieras usar. 
-            // Ejemplo: "nuestra-foto.jpg" (si está en la misma carpeta)
-            fotoUrl: "",   
+            // Aquí ya está tu imagen configurada:
+            fotoUrl: "IMG-20260912-WAO000.jpg",   
             
             // 🎁 EL REGALO SOLICITADO
             regalo: "¡2 pases diarios al Parque Tricao para el día que quieras! 🌿🦜"
         };
 
         // =====================================================================
-        // (No necesitas tocar el código de aquí hacia abajo)
+        // Lógica para actualizar la página
         // =====================================================================
         
         document.getElementById('header-name').innerText = `✿ para ${config.nombre} ✿`;
         document.getElementById('main-title').innerHTML = `${config.titulo}<br><em>${config.apodo}</em>`;
         document.getElementById('gift-text').innerText = config.regalo;
         
-        // Cambia la imagen solo si pusiste un enlace válido
+        // Cambia la imagen si se puso un enlace/nombre válido
         if (config.fotoUrl !== "") {
             document.getElementById('main-image').src = config.fotoUrl;
         }
